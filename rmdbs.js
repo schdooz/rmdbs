@@ -1,4 +1,8 @@
-const MongoClient = require('mongodb').MongoClient;
+var MongoClient = require('mongodb').MongoClient;
+var argv = require('yargs')
+    .alias('include', 'i')
+    .array('include')
+    .argv;
 
 async function dropDbs(client) {
     var excludedDbs = ['admin', 'config', 'local'];
@@ -7,25 +11,35 @@ async function dropDbs(client) {
 
     var dbNames = (await client.db().admin()
         .listDatabases({nameOnly: true}))
-        .databases;
+        .databases
+        .map(function (kvPair) {return kvPair.name;});
 
-    for (const kvPair of dbNames) {
-        if (excludedDbs.includes(kvPair.name)) {
+    if (argv.include) {
+        for (let name of argv.include) {
+            let i;
+            if ((i = excludedDbs.indexOf(name)) > -1) {
+                excludedDbs.splice(i, 1);
+            }
+        }
+    }
+
+    for (let name of dbNames) {
+        if (excludedDbs.includes(name)) {
             continue;
         }
 
-        db = client.db(kvPair.name);
+        db = client.db(name);
         dropDbProcesses.push(
             db.dropDatabase()
-                .then(function () {console.log('dropped database ' + kvPair.name);})
+                .then(function () {console.log('dropped database ' + name);})
                 .catch(function (error) {
-                    console.error('failed to drop database ' + kvPair.name + ' with error:\n' + error);
+                    console.error('failed to drop database ' + name + ' with error:\n' + error);
                 }));
     };
 
     Promise.all(dropDbProcesses)
-        .then(function() {console.log('success!');})
-        .catch(function() {console.error('failure!');})
+        .then(function () {console.log('success!');})
+        .catch(function () {console.error('failure!');})
         .finally(function () {client.close();});
 }
 

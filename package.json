@@ -1,0 +1,17 @@
+{
+  "name": "rmdbs",
+  "version": "1.0.0",
+  "description": "Drop all mongodb databases",
+  "main": "rmdbs.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "rmdbs"
+  },
+  "author": "Mark Dinh",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.5.7",
+    "yargs": "^15.3.1"
+  }
+}

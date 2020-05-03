@@ -2,6 +2,8 @@ var MongoClient = require('mongodb').MongoClient;
 var argv = require('yargs')
     .alias('include', 'i')
     .array('include')
+    .alias('all', 'a')
+    .boolean('all')
     .argv;
 
 async function dropDbs(client) {
@@ -13,6 +15,10 @@ async function dropDbs(client) {
         .listDatabases({nameOnly: true}))
         .databases
         .map(function (kvPair) {return kvPair.name;});
+
+    if (argv.all) {
+        excludedDbs = ['admin'];
+    }
 
     if (argv.include) {
         for (let name of argv.include) {

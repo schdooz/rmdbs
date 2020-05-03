@@ -14,7 +14,7 @@ Clone the repo, then execute `npm install` in the new directory to install the n
 
 * `node rmdbs.js --exclude account security`
 
-  Exclude 'account' and 'security' databases from deletion. rmdbs not delete anything if there is a provided name that does not correspond to an existing database.
+  Exclude 'account' and 'security' databases from deletion. rmdbs will not delete anything if there is a provided name that does not correspond to an existing database.
 
 * `node rmdbs.js --include local config`
 

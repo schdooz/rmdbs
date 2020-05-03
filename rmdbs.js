@@ -58,7 +58,7 @@ async function dropDbs(client) {
                 .catch(function (error) {
                     console.error('failed to drop database ' + name + ' with error:\n' + error);
                 }));
-    };
+    }
 
     Promise.all(dropDbProcesses)
         .then(function () {console.log('success!');})

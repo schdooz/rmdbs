@@ -11,7 +11,6 @@ var argv = require('yargs')
 async function dropDbs(client) {
     var excludedDbs = ['admin', 'config', 'local'];
     var dropDbProcesses = [];
-    var db;
 
     var dbNames = (await client.db().admin()
         .listDatabases({nameOnly: true}))
@@ -40,6 +39,8 @@ async function dropDbs(client) {
     }
 
     for (let name of dbNames) {
+        let db;
+
         if (excludedDbs.includes(name)) {
             continue;
         }

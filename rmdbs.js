@@ -35,9 +35,7 @@ async function dropDbs(client) {
             if (!dbNames.includes(name)) {
                 throw name + ' is not a name of a database. Did you misspell the db?';
             }
-        }
 
-        for (let name of argv.exclude) {
             if (!excludedDbs.includes(name)) {
                 excludedDbs.push(name);
             }

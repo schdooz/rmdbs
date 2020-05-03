@@ -32,6 +32,12 @@ async function dropDbs(client) {
 
     if (argv.exclude) {
         for (let name of argv.exclude) {
+            if (!dbNames.includes(name)) {
+                throw name + ' is not a name of a database. Did you misspell the db?';
+            }
+        }
+
+        for (let name of argv.exclude) {
             if (!excludedDbs.includes(name)) {
                 excludedDbs.push(name);
             }
@@ -62,7 +68,10 @@ async function dropDbs(client) {
 
 MongoClient.connect('mongodb://localhost:27017', {useUnifiedTopology: true})
     .then(function (client) {
-        dropDbs(client);
+        dropDbs(client).catch(function (error) {
+            console.error('dropDbs failed with error:\n' + error);
+            client.close();
+        })
     }).catch(function (error) {
         console.error('failed to connect to mongodb service with error:\n' + error);
     });

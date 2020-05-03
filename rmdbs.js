@@ -1,9 +1,11 @@
 var MongoClient = require('mongodb').MongoClient;
 var argv = require('yargs')
-    .alias('include', 'i')
-    .array('include')
     .alias('all', 'a')
     .boolean('all')
+    .alias('include', 'i')
+    .array('include')
+    .alias('exclude', 'e')
+    .array('exclude')
     .argv;
 
 async function dropDbs(client) {
@@ -25,6 +27,14 @@ async function dropDbs(client) {
             let i;
             if ((i = excludedDbs.indexOf(name)) > -1) {
                 excludedDbs.splice(i, 1);
+            }
+        }
+    }
+
+    if (argv.exclude) {
+        for (let name of argv.exclude) {
+            if (!excludedDbs.includes(name)) {
+                excludedDbs.push(name);
             }
         }
     }

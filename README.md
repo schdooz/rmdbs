@@ -1,8 +1,11 @@
 # rmdbs
 Delete all local mongodb databases
 
-Simple node.js script that deletes all local mongodb databases.
+A simple node.js script that deletes all local mongodb databases.
+
 By default, 'admin', 'config' and 'local' databases are excluded.
+
+Requires node.js >= 10.0.0.
 
 ## Installation
 Clone the repo, then execute `npm install` in the new directory to install the node dependencies (yargs, MongoDB node driver).

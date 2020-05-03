@@ -9,7 +9,7 @@
     "url": "rmdbs"
   },
   "author": "Mark Dinh",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "mongodb": "^3.5.7",
     "yargs": "^15.3.1"
